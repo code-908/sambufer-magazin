@@ -324,14 +324,14 @@ let cart = [];
 function renderProducts(list) {
     const grid = document.getElementById('product-grid');
     const countEl = document.getElementById('product-count');
-    if (countEl) countEl.textContent = list.length + ' ta mahsulot';
+    if (countEl) countEl.textContent = list.length + ' ta ónim';
     if (!grid) return;
 
     if (list.length === 0) {
         grid.innerHTML = `<div class="no-results">
             <div style="font-size:60px;margin-bottom:16px;">🔍</div>
-            <h3>Mahsulot topilmadi</h3>
-            <p style="color:#8b8e99;margin-top:8px;">Boshqa so'z bilan qidirib ko'ring</p>
+            <h3>Ónim tabılmadı</h3>
+            <p style="color:#8b8e99;margin-top:8px;">Basqa sóz menen izlańız</p>
         </div>`;
         return;
     }
@@ -354,18 +354,21 @@ function renderProducts(list) {
                     <span style="font-weight:600;font-size:12px;">${p.rating.toFixed(1)}</span>
                     <span style="color:#8b8e99;font-size:11px;">(${p.reviewsCount})</span>
                 </div>
-                <div class="installment-badge">${p.monthlyPrice.toLocaleString()} so'm/oyiga</div>
+                <div class="installment-badge">${p.monthlyPrice.toLocaleString()} som/ayǵa</div>
                 <div class="price-container">
-                    <span class="old-price">${p.oldPrice.toLocaleString()} so'm</span>
+                    <span class="old-price">${p.oldPrice.toLocaleString()} som</span>
                     <div class="current-price-row">
-                        <span class="current-price">${p.price.toLocaleString()} so'm</span>
-                        <button class="add-btn-circle" onclick="addToCart(${p.id})">
+                        <span class="current-price">${p.price.toLocaleString()} som</span>
+                        <button class="add-btn-circle" onclick="addToCart(${p.id})" title="Sebetke qos">
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                                 <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
                             </svg>
                         </button>
                     </div>
                 </div>
+                <button class="buy-now-btn" onclick="buyNow(${p.id})">
+                    📦 Buyırtma beriw
+                </button>
             </div>
         </div>`).join('');
 }
@@ -400,7 +403,7 @@ function addToCart(productId) {
     const ex = cart.find(x => x.id === productId);
     if (ex) ex.qty += 1; else cart.push({ ...p, qty: 1 });
     updateCartCount();
-    showToast('✅ "' + p.name.split('—')[0].trim() + '" savatga qo\'shildi!');
+    showToast('✅ "' + p.name.split('—')[0].trim() + '" sebetke qosıldı!');
 }
 
 function removeFromCart(i) { cart.splice(i, 1); updateCartCount(); renderCart(); }
@@ -422,30 +425,41 @@ function renderCart() {
     if (cart.length === 0) {
         ci.innerHTML = `<div style="text-align:center;padding:50px 20px;color:#8b8e99;">
             <div style="font-size:52px;margin-bottom:12px;">🛒</div>
-            <p style="font-weight:600;">Savatcha bo'sh</p>
+            <p style="font-weight:600;">Sebet bos</p>
         </div>`;
-        tp.textContent = "0 so'm"; return;
+        tp.textContent = "0 som"; return;
     }
     ci.innerHTML = cart.map((item, i) => `
         <div style="display:flex;gap:12px;padding:14px 0;border-bottom:1px solid #f2f4f7;align-items:flex-start;">
             <img src="${item.image}" style="width:64px;height:64px;object-fit:contain;border-radius:10px;background:#f8f0ff;flex-shrink:0;">
             <div style="flex:1;min-width:0;">
                 <p style="font-size:12px;font-weight:600;color:#1f2026;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;">${item.name}</p>
-                <p style="color:#7000ff;font-weight:800;margin-top:4px;font-size:14px;">${item.price.toLocaleString()} so'm</p>
+                <p style="color:#7000ff;font-weight:800;margin-top:4px;font-size:14px;">${item.price.toLocaleString()} som</p>
                 <div style="display:flex;align-items:center;gap:8px;margin-top:8px;">
                     <button onclick="changeQty(${i},-1)" style="width:26px;height:26px;border:1.5px solid #ddd;border-radius:50%;background:#fff;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;font-weight:700;">−</button>
                     <span style="font-weight:700;min-width:20px;text-align:center;">${item.qty}</span>
                     <button onclick="changeQty(${i},1)" style="width:26px;height:26px;border:1.5px solid #ddd;border-radius:50%;background:#fff;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;font-weight:700;">+</button>
-                    <button onclick="removeFromCart(${i})" style="margin-left:auto;background:none;border:none;color:#ff4651;cursor:pointer;font-size:12px;font-weight:500;">O'chirish</button>
+                    <button onclick="removeFromCart(${i})" style="margin-left:auto;background:none;border:none;color:#ff4651;cursor:pointer;font-size:12px;font-weight:500;">Óshiriw</button>
                 </div>
             </div>
         </div>`).join('');
-    tp.textContent = cart.reduce((s, x) => s + x.price * x.qty, 0).toLocaleString() + " so'm";
+    tp.textContent = cart.reduce((s, x) => s + x.price * x.qty, 0).toLocaleString() + " som";
+}
+
+// ============ BUY NOW ============
+function buyNow(productId) {
+    const p = products.find(x => x.id === productId);
+    if (!p) return;
+    // Savatı tozalab, faqat shu mahsulotni qo'shish
+    const ex = cart.find(x => x.id === productId);
+    if (!ex) cart.push({ ...p, qty: 1 });
+    updateCartCount();
+    openOrderModal();
 }
 
 // ============ ORDER ============
 function openOrderModal() {
-    if (cart.length === 0) { showToast("⚠️ Savatcha bo'sh!"); return; }
+    if (cart.length === 0) { showToast("⚠️ Sebet bos!"); return; }
     document.getElementById('cart-drawer').classList.remove('active');
     document.getElementById('cart-overlay').classList.remove('active');
     document.getElementById('order-modal').classList.add('active');
@@ -463,10 +477,10 @@ function renderOrderSummary() {
     el.innerHTML = cart.map(x => `
         <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f5f5f5;font-size:13px;">
             <span style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;max-width:65%;">${x.name} × ${x.qty}</span>
-            <span style="font-weight:700;">${(x.price * x.qty).toLocaleString()} so'm</span>
+            <span style="font-weight:700;">${(x.price * x.qty).toLocaleString()} som</span>
         </div>`).join('') +
         `<div style="display:flex;justify-content:space-between;padding:14px 0 4px;font-size:16px;font-weight:800;color:#7000ff;">
-            <span>Jami:</span><span>${total.toLocaleString()} so'm</span>
+            <span>Jámi:</span><span>${total.toLocaleString()} som</span>
         </div>`;
 }
 function submitOrder(e) {
@@ -474,7 +488,22 @@ function submitOrder(e) {
     const n = document.getElementById('order-name').value.trim();
     const p = document.getElementById('order-phone').value.trim();
     const a = document.getElementById('order-address').value.trim();
-    if (!n || !p || !a) { showToast('⚠️ Barcha maydonlarni to\'ldiring!'); return; }
+    const note = document.getElementById('order-note').value.trim();
+    if (!n || !p || !a) { showToast('⚠️ Barsha maydanlardy tolıqtırıń!'); return; }
+
+    // Save order to localStorage
+    const orders = JSON.parse(localStorage.getItem('sambufer_orders') || '[]');
+    const newOrder = {
+        id: Date.now(),
+        date: new Date().toLocaleString('uz-UZ'),
+        customer: { name: n, phone: p, address: a, note: note },
+        items: cart.map(x => ({ id: x.id, name: x.name, category: x.category, price: x.price, qty: x.qty, image: x.image })),
+        total: cart.reduce((s, x) => s + x.price * x.qty, 0),
+        status: 'pending'
+    };
+    orders.push(newOrder);
+    localStorage.setItem('sambufer_orders', JSON.stringify(orders));
+
     closeOrderModal();
     cart = []; updateCartCount();
     document.getElementById('success-modal').classList.add('active');
@@ -539,3 +568,31 @@ window.onload = function () {
     const dov = document.getElementById('delivery-overlay');
     if (dov) dov.addEventListener('click', closeDelivery);
 };
+
+// ============ ADMIN LOGIN ============
+function openAdminLogin() {
+    document.getElementById('admin-login-modal').classList.add('active');
+    document.getElementById('admin-login-overlay').classList.add('active');
+    document.getElementById('admin-login-error').style.display = 'none';
+    document.getElementById('admin-login-form').reset();
+}
+function closeAdminLogin() {
+    document.getElementById('admin-login-modal').classList.remove('active');
+    document.getElementById('admin-login-overlay').classList.remove('active');
+}
+function handleAdminLogin(e) {
+    e.preventDefault();
+    const user = document.getElementById('admin-username').value.trim();
+    const pass = document.getElementById('admin-password').value.trim();
+    if (user === 'admin' && pass === 'admin123') {
+        localStorage.setItem('sambufer_admin_auth', '1');
+        closeAdminLogin();
+        window.location.href = 'admin.html';
+    } else {
+        document.getElementById('admin-login-error').style.display = 'block';
+    }
+}
+function toggleAdminPw() {
+    const inp = document.getElementById('admin-password');
+    inp.type = inp.type === 'password' ? 'text' : 'password';
+}

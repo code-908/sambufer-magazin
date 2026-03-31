@@ -231,6 +231,89 @@ ul { list-style: none; }
 }
 .add-btn-circle:hover { background: var(--purple-dark); transform: scale(1.1); box-shadow: 0 4px 12px rgba(112,0,255,0.35); }
 
+/* ===== BUY NOW BUTTON ===== */
+.buy-now-btn {
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px 16px;
+    background: linear-gradient(135deg, #7000ff 0%, #a855f7 100%);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    letter-spacing: 0.2px;
+    box-shadow: 0 3px 10px rgba(112,0,255,0.25);
+}
+.buy-now-btn:hover {
+    background: linear-gradient(135deg, #5a00cc 0%, #9333ea 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(112,0,255,0.4);
+}
+.buy-now-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(112,0,255,0.3);
+}
+
+/* ===== PW WRAP (login form) ===== */
+.pw-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.pw-wrap input { flex: 1; }
+.pw-toggle {
+    position: absolute;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 4px;
+    line-height: 1;
+}
+
+/* ===== AUTH TABS ===== */
+.auth-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--border);
+}
+.auth-tab {
+    flex: 1;
+    padding: 13px;
+    border: none;
+    background: none;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-muted);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+}
+.auth-tab.active {
+    color: var(--purple);
+    border-bottom-color: var(--purple);
+    background: var(--purple-light);
+}
+.auth-switch {
+    text-align: center;
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 8px;
+}
+.auth-switch span {
+    color: var(--purple);
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
 /* ===== CART DRAWER ===== */
 .cart-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); backdrop-filter: blur(2px); z-index: 200; }
 .cart-overlay.active { display: block; }

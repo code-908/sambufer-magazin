@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="uz">
+<html lang="kaa">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sambufer Market — Moshina sambuferlari do'koni</title>
-    <meta name="description" content="O'zbekistondagi eng yaxshi avto-sambuferlar do'koni. 72+ moshina sambuferi muddatli to'lov bilan.">
+    <title>Sambufer Market — Avtomobil subuferleri dükanı</title>
+    <meta name="description" content="Ózbekstandaǵı eń jaqsı avto-subuferleri dükanı. 72+ avtomobil subuferi múddetli tólem menen.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -17,12 +17,12 @@
         <div class="container top-bar-content">
             <div class="location">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                Shahar: <strong>Toshkent</strong>
-                <span class="delivery-points" onclick="openDelivery()" style="cursor:pointer;">📍 Yetkazib berish nuqtalari</span>
+                Qala: <strong>Nókis</strong>
+                <span class="delivery-points" onclick="openDelivery()" style="cursor:pointer;">📍 Jetkerip beriw noqtaları</span>
             </div>
             <div class="top-links">
-                <span>Buyurtmalarim</span>
-                <span>O'zbekcha</span>
+                <span>Buyırtmalarım</span>
+                <span>Qaraqalpaqsha</span>
             </div>
         </div>
     </div>
@@ -38,7 +38,7 @@
                 Katalog
             </button>
             <div class="search-container">
-                <input type="text" id="search-input" placeholder="Brend yoki model nomi bo'yicha qidiring...">
+                <input type="text" id="search-input" placeholder="Brend yaki model atı boyınsha izlań...">
                 <button class="search-btn">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
@@ -46,20 +46,20 @@
                 </button>
             </div>
             <div class="header-actions">
-                <div class="action-item">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                    <span>Kirish</span>
+                <div id="admin-btn" class="action-item" onclick="openAdminLogin()" style="cursor:pointer;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                    <span>Admin Panel</span>
                 </div>
                 <div class="action-item">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-                    <span>Sevimlilar</span>
+                    <span>Sıylıqlar</span>
                 </div>
                 <div id="cart-icon" class="action-item" style="cursor:pointer;">
                     <div class="cart-wrapper">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
                         <span id="cart-count">0</span>
                     </div>
-                    <span>Savat</span>
+                    <span>Sebet</span>
                 </div>
             </div>
         </div>
@@ -70,10 +70,10 @@
         <div class="container">
             <div class="hero-banner">
                 <div class="banner-content">
-                    <p class="banner-sub">72+ Moshina Sambuferlari</p>
-                    <h1 class="banner-title">Maksimal <span class="highlight">Bas</span><br>Minimal Narxda!</h1>
-                    <p class="banner-desc">Pride, Alpine, Pioneer, JBL va boshqa top brendlar. Muddatli to'lov mavjud!</p>
-                    <button class="btn-banner" onclick="document.querySelector('.products-section').scrollIntoView({behavior:'smooth'})">Xarid Qilish →</button>
+                    <p class="banner-sub">72+ Avtomobil Subuferleri</p>
+                    <h1 class="banner-title">Maksimal <span class="highlight">Bas</span><br>Minimal Bahaɡa!</h1>
+                    <p class="banner-desc">Pride, Alpine, Pioneer, JBL hám basqa da top brendler. Múddetli tólem bar!</p>
+                    <button class="btn-banner" onclick="document.querySelector('.products-section').scrollIntoView({behavior:'smooth'})">Satıp Alıw →</button>
                 </div>
                 <div class="banner-badge-group">
                     <div class="banner-badge">
@@ -86,7 +86,7 @@
                     </div>
                     <div class="banner-badge">
                         <span class="badge-num">0%</span>
-                        <span class="badge-txt">Muddatli</span>
+                        <span class="badge-txt">Múddetli</span>
                     </div>
                 </div>
             </div>
@@ -96,7 +96,7 @@
     <!-- CATEGORY FILTERS -->
     <div class="container">
         <div class="filter-bar">
-            <button class="filter-btn active" onclick="filterByCategory('all', this)">Barchasi</button>
+            <button class="filter-btn active" onclick="filterByCategory('all', this)">Barlıǵı</button>
             <button class="filter-btn" onclick="filterByCategory('Pride', this)">Pride</button>
             <button class="filter-btn" onclick="filterByCategory('Deaf Bonce', this)">Deaf Bonce</button>
             <button class="filter-btn" onclick="filterByCategory('Pioneer', this)">Pioneer</button>
@@ -111,8 +111,8 @@
     <main class="container">
         <section class="products-section">
             <div class="section-header">
-                <h2 class="section-title">Barcha Sambuferlar</h2>
-                <span id="product-count" class="product-count">72 ta mahsulot</span>
+                <h2 class="section-title">Barsha Subuferleri</h2>
+                <span id="product-count" class="product-count">72 ta ónim</span>
             </div>
             <div id="product-grid" class="product-grid"></div>
         </section>
@@ -121,16 +121,16 @@
     <!-- CART DRAWER -->
     <div id="cart-drawer" class="cart-drawer">
         <div class="cart-header">
-            <h3>Savatcham (<span id="cart-total-items">0</span> ta)</h3>
+            <h3>Sebetim (<span id="cart-total-items">0</span> ta)</h3>
             <button id="close-cart" class="close-btn">&times;</button>
         </div>
         <div id="cart-items" class="cart-items"></div>
         <div class="cart-footer">
             <div class="cart-summary-total">
-                <span>Jami to'lov:</span>
-                <span id="total-price" style="color:#7000ff;font-weight:700;">0 so'm</span>
+                <span>Jámi tólem:</span>
+                <span id="total-price" style="color:#7000ff;font-weight:700;">0 som</span>
             </div>
-            <button class="btn-primary btn-block" onclick="openOrderModal()">Buyurtma Berish</button>
+            <button class="btn-primary btn-block" onclick="openOrderModal()">Buyırtma Beriw</button>
         </div>
     </div>
     <div id="cart-overlay" class="cart-overlay"></div>
@@ -139,20 +139,20 @@
     <div id="order-modal" class="modal">
         <div class="modal-box">
             <div class="modal-header">
-                <h3>📦 Buyurtmani rasmiylashtirish</h3>
+                <h3>📦 Buyırtmanı rásmiylestiriw</h3>
                 <button onclick="closeOrderModal()" class="close-btn">&times;</button>
             </div>
             <div id="order-summary" class="order-summary"></div>
             <form id="order-form" class="order-form">
-                <label>Ism-Familiya *</label>
-                <input id="order-name" type="text" placeholder="Masalan: Alisher Karimov" required>
-                <label>Telefon raqam *</label>
+                <label>Atı-Familiyası *</label>
+                <input id="order-name" type="text" placeholder="Mısalı: Alisher Karimov" required>
+                <label>Telefon nomer *</label>
                 <input id="order-phone" type="tel" placeholder="+998 90 123 45 67" required>
                 <label>Manzil *</label>
-                <input id="order-address" type="text" placeholder="Shahar, ko'cha, uy raqami" required>
-                <label>Izoh (ixtiyoriy)</label>
-                <textarea id="order-note" placeholder="Qo'shimcha ma'lumot..." rows="2"></textarea>
-                <button type="submit" class="btn-primary" style="margin-top:8px;">✅ Buyurtmani Tasdiqlash</button>
+                <input id="order-address" type="text" placeholder="Qala, kóше, úy nomeri" required>
+                <label>Izert (ixtıyarı)</label>
+                <textarea id="order-note" placeholder="Qosımsha maǵlıwmat..." rows="2"></textarea>
+                <button type="submit" class="btn-primary" style="margin-top:8px;">✅ Buyırtmanı Tastıyıqlaw</button>
             </form>
         </div>
     </div>
@@ -161,112 +161,134 @@
     <div id="success-modal" class="modal">
         <div class="modal-box" style="text-align:center;padding:48px 32px;">
             <div style="font-size:64px;margin-bottom:16px;">🎉</div>
-            <h2 style="color:#7000ff;margin-bottom:12px;">Buyurtmangiz qabul qilindi!</h2>
-            <p style="color:#4d4e59;font-size:15px;">Tez orada operatorimiz siz bilan bog'lanadi.</p>
+            <h2 style="color:#7000ff;margin-bottom:12px;">Buyırtmańız qabıl qılındı!</h2>
+            <p style="color:#4d4e59;font-size:15px;">Tez arada operatorımız siz menen baylanısadı.</p>
             <button onclick="document.getElementById('success-modal').classList.remove('active');document.getElementById('order-overlay').classList.remove('active');" class="btn-primary" style="margin-top:24px;max-width:200px;">OK</button>
         </div>
     </div>
     <div id="order-overlay" class="cart-overlay"></div>
 
+    <!-- ADMIN LOGIN MODAL -->
+    <div id="admin-login-modal" class="modal">
+        <div class="modal-box" style="max-width:400px;">
+            <div class="modal-header">
+                <h3>🔐 Admin Panel — Kirish</h3>
+                <button onclick="closeAdminLogin()" class="close-btn">&times;</button>
+            </div>
+            <form id="admin-login-form" class="order-form" onsubmit="handleAdminLogin(event)" style="padding:24px;">
+                <label>Login *</label>
+                <input id="admin-username" type="text" placeholder="admin" autocomplete="off" required>
+                <label>Parol *</label>
+                <div class="pw-wrap">
+                    <input id="admin-password" type="password" placeholder="••••••••" required>
+                    <button type="button" class="pw-toggle" onclick="toggleAdminPw()">👁</button>
+                </div>
+                <div id="admin-login-error" style="color:#ff4651;font-size:13px;display:none;margin-top:4px;">❌ Login yoki parol noto'g'ri!</div>
+                <button type="submit" class="btn-primary" style="margin-top:16px;">🚀 Kirish</button>
+            </form>
+        </div>
+    </div>
+    <div id="admin-login-overlay" class="cart-overlay" onclick="closeAdminLogin()"></div>
+
     <!-- DELIVERY MODAL -->
     <div id="delivery-modal" class="modal">
         <div class="modal-box" style="max-width:640px;">
             <div class="modal-header">
-                <h3>📍 Yetkazib berish nuqtalari</h3>
+                <h3>📍 Jetkerip beriw noqtaları</h3>
                 <button onclick="closeDelivery()" class="close-btn">&times;</button>
             </div>
             <div style="padding:20px 24px;">
-                <p style="color:#4d4e59;font-size:14px;margin-bottom:20px;">O'zbekistonning barcha viloyatlari va Qoraqalpog'istonga yetkazib beramiz. Buyurtma berish vaqtida manzilingizni kiriting.</p>
+                <p style="color:#4d4e59;font-size:14px;margin-bottom:20px;">Ózbekstannıń barsha wálayatları hám Qaraqalpaqstanǵa jetkerip beremiz. Buyırtma beriw waqtında adresingizdi kiritiń.</p>
                 <div class="delivery-grid">
                     <div class="delivery-card">
                         <div class="delivery-icon">🏙️</div>
-                        <h4>Toshkent shahri</h4>
-                        <p>1-2 kun</p>
-                        <span class="delivery-free">Bepul</span>
+                        <h4>Tashkent qalası</h4>
+                        <p>1-2 kún</p>
+                        <span class="delivery-free">Tegin</span>
                     </div>
                     <div class="delivery-card">
                         <div class="delivery-icon">🌆</div>
-                        <h4>Toshkent viloyati</h4>
-                        <p>1-3 kun</p>
-                        <span class="delivery-paid">25 000 so'm</span>
+                        <h4>Tashkent wálayatı</h4>
+                        <p>1-3 kún</p>
+                        <span class="delivery-paid">25 000 som</span>
                     </div>
                     <div class="delivery-card">
                         <div class="delivery-icon">🌿</div>
                         <h4>Samarqand</h4>
-                        <p>2-4 kun</p>
-                        <span class="delivery-paid">30 000 so'm</span>
+                        <p>2-4 kún</p>
+                        <span class="delivery-paid">30 000 som</span>
                     </div>
                     <div class="delivery-card">
                         <div class="delivery-icon">🏺</div>
-                        <h4>Buxoro</h4>
-                        <p>2-4 kun</p>
-                        <span class="delivery-paid">30 000 so'm</span>
+                        <h4>Buxara</h4>
+                        <p>2-4 kún</p>
+                        <span class="delivery-paid">30 000 som</span>
                     </div>
                     <div class="delivery-card">
                         <div class="delivery-icon">🌾</div>
-                        <h4>Qashqadaryo</h4>
-                        <p>3-5 kun</p>
-                        <span class="delivery-paid">35 000 so'm</span>
+                        <h4>Qashqadárya</h4>
+                        <p>3-5 kún</p>
+                        <span class="delivery-paid">35 000 som</span>
                     </div>
                     <div class="delivery-card">
                         <div class="delivery-icon">🏔️</div>
-                        <h4>Surxondaryo</h4>
-                        <p>3-5 kun</p>
-                        <span class="delivery-paid">35 000 so'm</span>
+                        <h4>Surxandárya</h4>
+                        <p>3-5 kún</p>
+                        <span class="delivery-paid">35 000 som</span>
                     </div>
                     <div class="delivery-card">
                         <div class="delivery-icon">🌊</div>
-                        <h4>Xorazm</h4>
-                        <p>3-5 kun</p>
-                        <span class="delivery-paid">35 000 so'm</span>
+                        <h4>Xorezm</h4>
+                        <p>3-5 kún</p>
+                        <span class="delivery-paid">35 000 som</span>
                     </div>
                     <div class="delivery-card">
                         <div class="delivery-icon">🌻</div>
-                        <h4>Farg'ona</h4>
-                        <p>2-4 kun</p>
-                        <span class="delivery-paid">30 000 so'm</span>
+                        <h4>Ferg'ana</h4>
+                        <p>2-4 kún</p>
+                        <span class="delivery-paid">30 000 som</span>
                     </div>
                     <div class="delivery-card">
                         <div class="delivery-icon">🏞️</div>
                         <h4>Andijon</h4>
-                        <p>2-4 kun</p>
-                        <span class="delivery-paid">30 000 so'm</span>
+                        <p>2-4 kún</p>
+                        <span class="delivery-paid">30 000 som</span>
                     </div>
                     <div class="delivery-card">
                         <div class="delivery-icon">🍇</div>
                         <h4>Namangan</h4>
-                        <p>2-4 kun</p>
-                        <span class="delivery-paid">30 000 so'm</span>
+                        <p>2-4 kún</p>
+                        <span class="delivery-paid">30 000 som</span>
                     </div>
                     <div class="delivery-card">
                         <div class="delivery-icon">🌷</div>
-                        <h4>Sirdaryo</h4>
-                        <p>2-3 kun</p>
-                        <span class="delivery-paid">28 000 so'm</span>
+                        <h4>Sırdarya</h4>
+                        <p>2-3 kún</p>
+                        <span class="delivery-paid">28 000 som</span>
                     </div>
                     <div class="delivery-card">
                         <div class="delivery-icon">🌴</div>
                         <h4>Jizzax</h4>
-                        <p>2-3 kun</p>
-                        <span class="delivery-paid">28 000 so'm</span>
+                        <p>2-3 kún</p>
+                        <span class="delivery-paid">28 000 som</span>
                     </div>
                     <div class="delivery-card">
                         <div class="delivery-icon">🏜️</div>
-                        <h4>Navoiy</h4>
-                        <p>3-5 kun</p>
-                        <span class="delivery-paid">32 000 so'm</span>
+                        <h4>Nawáyi</h4>
+                        <p>3-5 kún</p>
+                        <span class="delivery-paid">32 000 som</span>
                     </div>
                     <div class="delivery-card" style="border-color:#7000ff;background:linear-gradient(135deg,#f8f0ff,#fff);">
                         <div class="delivery-icon">🏖️</div>
-                        <h4 style="color:#7000ff;">Nukus (QR)</h4>
-                        <p>4-6 kun</p>
-                        <span class="delivery-paid">40 000 so'm</span>
+                        <h4 style="color:#7000ff;">Nókis (QR)</h4>
+                        <p>4-6 kún</p>
+                        <span class="delivery-paid">40 000 som</span>
                     </div>
                 </div>
                 <div style="background:#f8f0ff;border-radius:12px;padding:16px;margin-top:20px;border-left:4px solid #7000ff;">
-                    <p style="font-size:13px;color:#4d4e59;">📞 <strong>Buyurtma uchun:</strong> +998 90 000 00 00</p>
-                    <p style="font-size:13px;color:#4d4e59;margin-top:6px;">🕐 <strong>Ish vaqti:</strong> Du–Shan, 09:00–21:00</p>
-                    <p style="font-size:13px;color:#4d4e59;margin-top:6px;">🚚 <strong>50 000 so'mdan yuqori buyurtmalarga</strong> — chegirma!</p>
+                    <p style="font-size:13px;color:#4d4e59;">📞 <strong>Buyırtma ushın:</strong> +998 90 000 00 00</p>
+                    <p style="font-size:13px;color:#4d4e59;margin-top:6px;">🕐 <strong>Jumıs waqtı:</strong> Dú–Shan, 09:00–21:00</p>
+                    <p style="font-size:13px;color:#4d4e59;margin-top:6px;">🚚 <strong>50 000 somnan joqarı buyırtmalarǵa</strong> — shet qoyıladı!</p>
                 </div>
             </div>
         </div>
@@ -278,27 +300,27 @@
         <div class="container footer-content">
             <div class="footer-left">
                 <div class="logo-text" style="font-size:22px;margin-bottom:10px;">SAMBUFER</div>
-                <p style="color:#8b8e99;font-size:14px;max-width:260px;">O'zbekistondagi eng yaxshi avto-sambuferlar marketpleysi.</p>
+                <p style="color:#8b8e99;font-size:14px;max-width:260px;">Ózbekstandaǵı eń jaqsı avto-subuferleri marketpleysi.</p>
             </div>
             <div class="footer-column">
-                <h4>Xaridorga</h4>
+                <h4>Satıp alıwshıǵa</h4>
                 <ul>
-                    <li>Yetkazib berish</li>
-                    <li>Qaytarish siyosati</li>
-                    <li>Kafolat</li>
+                    <li>Jetkerip beriw</li>
+                    <li>Qaytarıw siyasatı</li>
+                    <li>Kepillik</li>
                 </ul>
             </div>
             <div class="footer-column">
-                <h4>Aloqa</h4>
+                <h4>Baylanıs</h4>
                 <ul>
                     <li>+998 90 000 00 00</li>
                     <li>info@sambufer.uz</li>
-                    <li>Toshkent, O'zbekiston</li>
+                    <li>Nókis, Qaraqalpaqstan</li>
                 </ul>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 Sambufer Market. Barcha huquqlar himoyalangan.</p>
+            <p>&copy; 2026 Sambufer Market. Barsha huqıqlar qorǵalǵan.</p>
         </div>
     </footer>
 

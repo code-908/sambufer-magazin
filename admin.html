@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sambufer — Admin Panel</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+<!-- AUTH CHECK -->
+<div id="auth-guard" style="display:none;position:fixed;inset:0;background:#0f0520;z-index:9999;align-items:center;justify-content:center;flex-direction:column;gap:16px;">
+    <div style="color:#7000ff;font-size:48px;">🔐</div>
+    <p style="color:#fff;font-size:18px;font-weight:700;">Ruxsat yo'q!</p>
+    <p style="color:#a0a0b0;font-size:14px;">Iltimos, admin sifatida kiring.</p>
+    <a href="index.html" style="background:#7000ff;color:#fff;padding:12px 28px;border-radius:10px;text-decoration:none;font-weight:700;margin-top:8px;">← Bosh sahifaga</a>
+</div>
+
+<div id="admin-app" style="display:none;width:100%;height:100vh;overflow:hidden;flex:1;flex-direction:row;">
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+        <span class="logo-icon">⚡</span>
+        <span class="logo-title">SAMBUFER</span>
+        <span class="logo-badge">ADMIN</span>
+    </div>
+
+    <nav class="sidebar-nav">
+        <button class="nav-item active" onclick="switchPage('orders')" id="nav-orders">
+            <span class="nav-icon">📦</span>
+            <span class="nav-label">Buyurtmalar</span>
+            <span class="nav-badge" id="orders-badge">0</span>
+        </button>
+        <button class="nav-item" onclick="switchPage('warehouse')" id="nav-warehouse">
+            <span class="nav-icon">🏪</span>
+            <span class="nav-label">Ombor</span>
+        </button>
+        <button class="nav-item" onclick="switchPage('reports')" id="nav-reports">
+            <span class="nav-icon">📊</span>
+            <span class="nav-label">Hisobot</span>
+        </button>
+    </nav>
+
+    <div class="sidebar-footer">
+        <button class="logout-btn" onclick="adminLogout()">
+            <span>🚪</span> Chiqish
+        </button>
+        <a href="index.html" class="back-site-btn">
+            <span>🌐</span> Saytga qaytish
+        </a>
+    </div>
+</aside>
+
+<!-- MAIN CONTENT -->
+<main class="admin-main">
+
+    <!-- TOP BAR -->
+    <header class="admin-topbar">
+        <div class="topbar-left">
+            <button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+            <div>
+                <h1 class="page-title" id="page-title">Buyurtmalar</h1>
+                <p class="page-subtitle" id="page-subtitle">Yangi buyurtmalarni boshqaring</p>
+            </div>
+        </div>
+        <div class="topbar-right">
+            <div class="admin-chip">
+                <span>👤</span>
+                <span>admin</span>
+            </div>
+            <div class="current-time" id="current-time"></div>
+        </div>
+    </header>
+
+    <!-- ============================
+         PAGE: ORDERS
+         ============================ -->
+    <section id="page-orders" class="admin-page active">
+
+        <!-- Stats row -->
+        <div class="stats-row">
+            <div class="stat-card stat-pending">
+                <div class="stat-icon">⏳</div>
+                <div>
+                    <p class="stat-num" id="stat-pending">0</p>
+                    <p class="stat-lbl">Kutilmoqda</p>
+                </div>
+            </div>
+            <div class="stat-card stat-sold">
+                <div class="stat-icon">✅</div>
+                <div>
+                    <p class="stat-num" id="stat-sold">0</p>
+                    <p class="stat-lbl">Sotildi</p>
+                </div>
+            </div>
+            <div class="stat-card stat-revenue">
+                <div class="stat-icon">💰</div>
+                <div>
+                    <p class="stat-num" id="stat-revenue">0</p>
+                    <p class="stat-lbl">Jami daromad (som)</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filter tabs -->
+        <div class="filter-tabs">
+            <button class="ftab active" onclick="filterOrders('all', this)">Hammasi</button>
+            <button class="ftab" onclick="filterOrders('pending', this)">⏳ Kutilmoqda</button>
+            <button class="ftab" onclick="filterOrders('sold', this)">✅ Sotildi</button>
+        </div>
+
+        <div id="orders-container" class="orders-container"></div>
+    </section>
+
+    <!-- ============================
+         PAGE: WAREHOUSE
+         ============================ -->
+    <section id="page-warehouse" class="admin-page">
+
+        <!-- Add product button -->
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:12px;">
+            <div>
+                <h2 style="font-size:18px;font-weight:800;">Mahsulotlar ombori</h2>
+                <p style="color:#a0a0b0;font-size:13px;" id="wh-count">0 ta mahsulot</p>
+            </div>
+            <button class="add-product-btn" onclick="openAddProduct()">
+                ＋ Mahsulot qo'shish
+            </button>
+        </div>
+
+        <div id="warehouse-grid" class="warehouse-grid"></div>
+    </section>
+
+    <!-- ============================
+         PAGE: REPORTS
+         ============================ -->
+    <section id="page-reports" class="admin-page">
+
+        <!-- Report cards -->
+        <div class="report-cards">
+            <div class="report-card r-green">
+                <p class="r-label">💰 Jami daromad</p>
+                <p class="r-value" id="rep-revenue">0 som</p>
+                <p class="r-desc">Sotilgan tovarlardan</p>
+            </div>
+            <div class="report-card r-blue">
+                <p class="r-label">📦 Sotilgan buyurtmalar</p>
+                <p class="r-value" id="rep-orders">0 ta</p>
+                <p class="r-desc">Jami yopilgan buyurtmalar</p>
+            </div>
+            <div class="report-card r-purple">
+                <p class="r-label">🛍️ Sotilgan mahsulotlar</p>
+                <p class="r-value" id="rep-items">0 ta</p>
+                <p class="r-desc">Jami dona</p>
+            </div>
+            <div class="report-card r-orange">
+                <p class="r-label">📈 O'rtacha buyurtma</p>
+                <p class="r-value" id="rep-avg">0 som</p>
+                <p class="r-desc">Har bir buyurtma uchun</p>
+            </div>
+        </div>
+
+        <!-- Sales history -->
+        <div class="history-section">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+                <h3 style="font-size:16px;font-weight:800;">📋 Sotilgan tovarlar tarixi</h3>
+                <button onclick="clearSoldHistory()" style="background:none;border:1px solid #ff4651;color:#ff4651;padding:6px 14px;border-radius:8px;font-size:12px;cursor:pointer;font-weight:600;">🗑️ Tozalash</button>
+            </div>
+            <div class="history-table-wrap">
+                <table class="history-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Sana</th>
+                            <th>Mijoz</th>
+                            <th>Telefon</th>
+                            <th>Manzil</th>
+                            <th>Mahsulotlar</th>
+                            <th>Jami summa</th>
+                        </tr>
+                    </thead>
+                    <tbody id="history-tbody"></tbody>
+                </table>
+                <div id="history-empty" style="text-align:center;padding:60px;color:#a0a0b0;display:none;">
+                    <div style="font-size:48px;margin-bottom:12px;">📊</div>
+                    <p>Hali sotilgan buyurtmalar yo'q</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+</div>
+
+<!-- ===============================
+     ADD PRODUCT MODAL
+     =============================== -->
+<div id="add-product-modal" class="ap-modal-overlay" style="display:none;">
+    <div class="ap-modal">
+        <div class="ap-modal-header">
+            <h3>➕ Yangi mahsulot qo'shish</h3>
+            <button onclick="closeAddProduct()" class="ap-close">×</button>
+        </div>
+        <form id="add-product-form" class="ap-form" onsubmit="handleAddProduct(event)">
+            <div class="ap-grid2">
+                <div class="ap-field">
+                    <label>Mahsulot nomi *</label>
+                    <input id="ap-name" type="text" placeholder="Masalan: Pride M.6 12&quot;" required>
+                </div>
+                <div class="ap-field">
+                    <label>Kategoriya (Brend) *</label>
+                    <select id="ap-category" required>
+                        <option value="">Tanlang...</option>
+                        <option>Pride</option>
+                        <option>Deaf Bonce</option>
+                        <option>Pioneer</option>
+                        <option>JBL</option>
+                        <option>Kenwood</option>
+                        <option>Alpine</option>
+                        <option>Hertz</option>
+                        <option>Kicker</option>
+                        <option>Edge</option>
+                        <option>Sony</option>
+                        <option>Ural</option>
+                        <option>Dynamic State</option>
+                        <option>Avatar</option>
+                        <option>SWAT</option>
+                        <option>MTX</option>
+                        <option>Gladen</option>
+                        <option>Soundstream</option>
+                        <option>Rockford</option>
+                        <option>JL Audio</option>
+                        <option>Skar</option>
+                        <option>Crescendo</option>
+                        <option>DD Audio</option>
+                        <option>Momo</option>
+                        <option>CT Sounds</option>
+                        <option>Boshqa</option>
+                    </select>
+                </div>
+            </div>
+            <div class="ap-grid2">
+                <div class="ap-field">
+                    <label>Narx (so'm) *</label>
+                    <input id="ap-price" type="number" placeholder="1500000" min="0" required>
+                </div>
+                <div class="ap-field">
+                    <label>Skidkali narx (so'm)</label>
+                    <input id="ap-old-price" type="number" placeholder="1800000" min="0">
+                </div>
+            </div>
+            <div class="ap-field">
+                <label>Mahsulot rasmi (URL yoki fayl)</label>
+                <div style="display:flex;gap:10px;align-items:center;">
+                    <input id="ap-image-url" type="url" placeholder="https://... (ixtiyoriy)" style="flex:1;">
+                    <span style="color:#a0a0b0;font-size:12px;">yoki</span>
+                    <label class="file-pick-btn">
+                        📁 Fayl
+                        <input type="file" id="ap-image-file" accept="image/*" style="display:none;" onchange="previewImage(this)">
+                    </label>
+                </div>
+                <div id="ap-img-preview" style="margin-top:10px;display:none;">
+                    <img id="ap-img-preview-img" src="" style="height:90px;border-radius:10px;object-fit:contain;background:#f0e6ff;padding:6px;">
+                </div>
+            </div>
+            <div class="ap-field">
+                <label>Mahsulot haqida ma'lumot</label>
+                <textarea id="ap-desc" rows="3" placeholder="Quvvat, o'lchami, xususiyatlari..."></textarea>
+            </div>
+            <div class="ap-grid2">
+                <div class="ap-field">
+                    <label>Reyting (1-5)</label>
+                    <input id="ap-rating" type="number" placeholder="4.7" min="1" max="5" step="0.1" value="4.5">
+                </div>
+                <div class="ap-field">
+                    <label>Izohlar soni</label>
+                    <input id="ap-reviews" type="number" placeholder="50" min="0" value="0">
+                </div>
+            </div>
+            <div style="display:flex;gap:12px;margin-top:8px;">
+                <button type="button" onclick="closeAddProduct()" style="flex:1;padding:13px;border:1.5px solid #ddd;border-radius:10px;background:#fff;font-size:14px;font-weight:600;cursor:pointer;">Bekor qilish</button>
+                <button type="submit" class="ap-submit-btn">✅ Saqlash</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- ORDER DETAIL MODAL -->
+<div id="order-detail-modal" class="ap-modal-overlay" style="display:none;">
+    <div class="ap-modal" style="max-width:560px;">
+        <div class="ap-modal-header">
+            <h3>📦 Buyurtma tafsiloti</h3>
+            <button onclick="closeOrderDetail()" class="ap-close">×</button>
+        </div>
+        <div id="order-detail-body" style="padding:20px 24px;max-height:65vh;overflow-y:auto;"></div>
+        <div style="padding:16px 24px;border-top:1px solid #f2f4f7;display:flex;gap:12px;" id="order-detail-actions"></div>
+    </div>
+</div>
+
+<!-- TOAST -->
+<div id="admin-toast"></div>
+
+<script src="admin.js"></script>
+</body>
+</html>
