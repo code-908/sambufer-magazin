@@ -80,27 +80,34 @@
          ============================ -->
     <section id="page-orders" class="admin-page active">
 
-        <!-- Stats row -->
+        <!-- Stats row (Daromad tahlili) -->
         <div class="stats-row">
             <div class="stat-card stat-pending">
                 <div class="stat-icon">⏳</div>
                 <div>
                     <p class="stat-num" id="stat-pending">0</p>
-                    <p class="stat-lbl">Kutilmoqda</p>
+                    <p class="stat-lbl">Buyurtmalar</p>
                 </div>
             </div>
-            <div class="stat-card stat-sold">
-                <div class="stat-icon">✅</div>
+            <div class="stat-card stat-sold" style="border-left: 4px solid #00b857;">
+                <div class="stat-icon" style="color: #00b857;">✅</div>
                 <div>
                     <p class="stat-num" id="stat-sold">0</p>
                     <p class="stat-lbl">Sotildi</p>
                 </div>
             </div>
-            <div class="stat-card stat-revenue">
+            <div class="stat-card stat-revenue" style="background: #f8faff; border: 1.5px solid #e0e8ff;">
                 <div class="stat-icon">💰</div>
                 <div>
-                    <p class="stat-num" id="stat-revenue">0</p>
-                    <p class="stat-lbl">Jami daromad (som)</p>
+                    <p class="stat-num" id="stat-revenue" style="color: #00b857;">0 som</p>
+                    <p class="stat-lbl">Tushgan tushum</p>
+                </div>
+            </div>
+            <div class="stat-card stat-expected" style="background: #fff9f0; border: 1.5px solid #ffe8cc;">
+                <div class="stat-icon" style="color: #ff9800;">📉</div>
+                <div>
+                    <p class="stat-num" id="stat-expected" style="color: #ff9800;">0 som</p>
+                    <p class="stat-lbl">Kutilayotgan tushum</p>
                 </div>
             </div>
         </div>
@@ -110,6 +117,7 @@
             <button class="ftab active" onclick="filterOrders('all', this)">Hammasi</button>
             <button class="ftab" onclick="filterOrders('pending', this)">⏳ Kutilmoqda</button>
             <button class="ftab" onclick="filterOrders('sold', this)">✅ Sotildi</button>
+            <button class="ftab" onclick="filterOrders('returned', this)">🔄 Qaytarildi</button>
         </div>
 
         <div id="orders-container" class="orders-container"></div>
@@ -161,7 +169,20 @@
                 <p class="r-value" id="rep-avg">0 som</p>
                 <p class="r-desc">Har bir buyurtma uchun</p>
             </div>
+            <div class="report-card r-yellow">
+                <p class="r-label">⏳ Kutilayotgan tushum</p>
+                <p class="r-value" id="rep-expected">0 som</p>
+                <p class="r-desc">Yetib kelgan yangi buyurtmalar</p>
+            </div>
         </div>
+172: 
+173:         <!-- Top Selling Categories -->
+174:         <div class="top-categories-section" style="margin-bottom: 24px;">
+175:             <h3 style="font-size:16px;font-weight:800;margin-bottom:16px;">🔥 Eng ko'p sotilgan brendlar</h3>
+176:             <div id="top-brands-grid" style="display:grid;grid-template-columns:repeat(auto-fill, minmax(200px, 1fr));gap:16px;">
+177:                 <!-- Dynamic brands here -->
+178:             </div>
+179:         </div>
 
         <!-- Sales history -->
         <div class="history-section">

@@ -21,7 +21,7 @@
                 <span class="delivery-points" onclick="openDelivery()" style="cursor:pointer;">📍 Jetkerip beriw noqtaları</span>
             </div>
             <div class="top-links">
-                <span>Buyırtmalarım</span>
+                <span onclick="openProfileModal()" style="cursor:pointer;">Buyırtmalarım</span>
                 <span>Qaraqalpaqsha</span>
             </div>
         </div>
@@ -33,10 +33,24 @@
             <div class="logo">
                 <span class="logo-text">SAMBUFER</span>
             </div>
-            <button class="katalog-btn">
-                <div class="burger"><span></span><span></span><span></span></div>
-                Katalog
-            </button>
+            <div style="position:relative;">
+                <button class="katalog-btn" id="katalog-btn">
+                    <div class="burger"><span></span><span></span><span></span></div>
+                    Katalog
+                </button>
+                <div id="katalog-dropdown" class="katalog-dropdown">
+                    <div class="katalog-grid">
+                        <div class="katalog-item" onclick="executeSearch('Aktiv');kBtn.classList.remove('active');kDrop.classList.remove('active');"><span>🔋</span> Aktiv sambuferler</div>
+                        <div class="katalog-item" onclick="executeSearch('Passiv');kBtn.classList.remove('active');kDrop.classList.remove('active');"><span>🧊</span> Passiv sambuferler</div>
+                        <div class="katalog-item" onclick="executeSearch('dinamik');kBtn.classList.remove('active');kDrop.classList.remove('active');"><span>🔊</span> Dinamikler</div>
+                        <div class="katalog-item" onclick="executeSearch('Korpus');kBtn.classList.remove('active');kDrop.classList.remove('active');"><span>📦</span> Korpuslı sambuferler</div>
+                        <div class="katalog-item" onclick="executeSearch('mini');kBtn.classList.remove('active');kDrop.classList.remove('active');"><span>🤏</span> Mini sambuferler</div>
+                        <div class="katalog-item" onclick="executeSearch('Power');kBtn.classList.remove('active');kDrop.classList.remove('active');"><span>🔥</span> Professional sambuferler</div>
+                        <div class="katalog-item" onclick="executeSearch('Box');kBtn.classList.remove('active');kDrop.classList.remove('active');"><span>🎹</span> Báss-boxlar</div>
+                        <div class="katalog-item" onclick="executeSearch('Kit');kBtn.classList.remove('active');kDrop.classList.remove('active');"><span>🎁</span> Komplektler</div>
+                    </div>
+                </div>
+            </div>
             <div class="search-container">
                 <input type="text" id="search-input" placeholder="Brend yaki model atı boyınsha izlań...">
                 <button class="search-btn">
@@ -46,13 +60,13 @@
                 </button>
             </div>
             <div class="header-actions">
+                <div class="action-item" id="auth-btn" onclick="openAuthModal()" style="cursor:pointer;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    <span id="auth-label">Kiriw</span>
+                </div>
                 <div id="admin-btn" class="action-item" onclick="openAdminLogin()" style="cursor:pointer;">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                    <span>Admin Panel</span>
-                </div>
-                <div class="action-item">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-                    <span>Sıylıqlar</span>
+                    <span>Admin</span>
                 </div>
                 <div id="cart-icon" class="action-item" style="cursor:pointer;">
                     <div class="cart-wrapper">
@@ -137,22 +151,136 @@
 
     <!-- ORDER MODAL -->
     <div id="order-modal" class="modal">
-        <div class="modal-box">
+        <div class="modal-box" style="max-width:580px;">
             <div class="modal-header">
                 <h3>📦 Buyırtmanı rásmiylestiriw</h3>
                 <button onclick="closeOrderModal()" class="close-btn">&times;</button>
             </div>
             <div id="order-summary" class="order-summary"></div>
             <form id="order-form" class="order-form">
-                <label>Atı-Familiyası *</label>
+
+                <label>Isim-Familiya *</label>
                 <input id="order-name" type="text" placeholder="Mısalı: Alisher Karimov" required>
+
                 <label>Telefon nomer *</label>
                 <input id="order-phone" type="tel" placeholder="+998 90 123 45 67" required>
-                <label>Manzil *</label>
-                <input id="order-address" type="text" placeholder="Qala, kóше, úy nomeri" required>
-                <label>Izert (ixtıyarı)</label>
-                <textarea id="order-note" placeholder="Qosımsha maǵlıwmat..." rows="2"></textarea>
-                <button type="submit" class="btn-primary" style="margin-top:8px;">✅ Buyırtmanı Tastıyıqlaw</button>
+
+                <!-- YETKAZIB BERISH USULI -->
+                <label>Yetkazib beriw usuli *</label>
+                <div class="delivery-type-row">
+                    <label class="delivery-type-card active" id="dtype-pickup-card">
+                        <input type="radio" name="delivery-type" value="pickup" checked onchange="switchDeliveryType('pickup')">
+                        <span class="dtype-icon">🏪</span>
+                        <div>
+                            <span class="dtype-title">Uzum punktidan olish</span>
+                            <span class="dtype-desc">Tekin • Yaqin punktni tanlang</span>
+                        </div>
+                    </label>
+                    <label class="delivery-type-card" id="dtype-home-card">
+                        <input type="radio" name="delivery-type" value="home" onchange="switchDeliveryType('home')">
+                        <span class="dtype-icon">🚚</span>
+                        <div>
+                            <span class="dtype-title">Uyga yetkazish</span>
+                            <span class="dtype-desc">25 000 – 50 000 so'm</span>
+                        </div>
+                    </label>
+                </div>
+
+                <!-- UZUM PUNKT TANLASH -->
+                <div id="pickup-section">
+                    <label>Viloyat *</label>
+                    <select id="order-region" onchange="loadPickupPoints(this.value)" required>
+                        <option value="">— Viloyatni tanlang —</option>
+                        <option>Toshkent shahri</option>
+                        <option>Toshkent viloyati</option>
+                        <option>Samarqand</option>
+                        <option>Buxoro</option>
+                        <option>Farg'ona</option>
+                        <option>Andijon</option>
+                        <option>Namangan</option>
+                        <option>Qashqadaryo</option>
+                        <option>Surxandaryo</option>
+                        <option>Xorazm</option>
+                        <option>Navoiy</option>
+                        <option>Jizzax</option>
+                        <option>Sirdaryo</option>
+                        <option selected>Qoraqalpog'iston (Nukus)</option>
+                    </select>
+
+                    <label>Uzum punkt *</label>
+                    <select id="order-point" required>
+                        <option value="">— Punktni tanlang —</option>
+                        <option>Nukus — Dostlik ko'ch. 12 (Bozor yonida)</option>
+                        <option>Nukus — Amir Temur ko'ch. 45 (MFC yonida)</option>
+                        <option>Nukus — Karakalpakstan ko'ch. 8 (Savdo markazi)</option>
+                        <option>Nukus — Berdaq ko'ch. 22 (Markaziy bazar)</option>
+                        <option>Nukus — Engels ko'ch. 5 (TSUM yaqinida)</option>
+                        <option>Nukus — Qo'ng'irot yo'li (Supermarket yonida)</option>
+                        <option>Xo'jayli — Markaziy ko'ch. 18</option>
+                        <option>Beruniy — Mustaqillik ko'ch. 7</option>
+                        <option>Turtkul — Bozor maydon 3</option>
+                        <option>Kegeyli — Markaziy ko'ch. 1</option>
+                    </select>
+
+                    <div id="pickup-info-card" class="pickup-info-box" style="display:none;">
+                        <span style="font-size:24px;">📍</span>
+                        <div>
+                            <p id="pickup-info-name" style="font-weight:700;font-size:13px;color:#1f2026;"></p>
+                            <p id="pickup-info-addr" style="font-size:12px;color:#8b8e99;margin-top:2px;"></p>
+                            <p style="font-size:12px;color:#00b857;margin-top:2px;">🕐 09:00 – 21:00 | Dushanba–Yakshanba</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- UY MANZILI -->
+                <div id="home-section" style="display:none;">
+                    <label>To'liq manzil *</label>
+                    <input id="order-address" type="text" placeholder="Viloyat, shahar, ko'cha, uy raqami">
+                    <div style="background:#fff5cc;border-radius:8px;padding:10px 14px;font-size:12px;color:#7a5400;margin-top:4px;">
+                        💡 Yetkazib berish narxi manzilga qarab belgilanadi: 25 000 – 50 000 so'm
+                    </div>
+                </div>
+
+                <div class="form-section" style="margin-top:20px;">
+                    <p style="font-size:12px; font-weight:700; color:#6b6b8a; margin-bottom:8px; text-transform:uppercase;">Tólem usılı</p>
+                    <div style="display:flex; flex-direction:column; gap:8px;">
+                        <label style="display:flex; align-items:center; gap:10px; padding:12px; border:1.5px solid #eee; border-radius:10px; cursor:pointer; background:#fff;">
+                            <input type="radio" name="payment-method" value="card" checked onchange="toggleCardArea(true)" style="accent-color:#7000ff; width:18px; height:18px;">
+                            <div>
+                                <p style="font-size:13px; font-weight:700; color:#1f2026;">Karta arqalı</p>
+                                <p style="font-size:11px; color:#8b8e99;">Bank kartasın qosıw (Humo / Uzcard)</p>
+                            </div>
+                        </label>
+                        <label style="display:flex; align-items:center; gap:10px; padding:12px; border:1.5px solid #eee; border-radius:10px; cursor:pointer; background:#fff;">
+                            <input type="radio" name="payment-method" value="uzum" onchange="toggleCardArea(true)" style="accent-color:#7000ff; width:18px; height:18px;">
+                            <div>
+                                <p style="font-size:13px; font-weight:800; color:#7000ff;">Uzum Karta</p>
+                                <p style="font-size:11px; color:#8b8e99;">Sebepli keshbek hám bóleklep tólew</p>
+                            </div>
+                        </label>
+                        <label style="display:flex; align-items:center; gap:10px; padding:12px; border:1.5px solid #eee; border-radius:10px; cursor:pointer; background:#fff;">
+                            <input type="radio" name="payment-method" value="pickup_pay" onchange="toggleCardArea(false)" style="accent-color:#7000ff; width:18px; height:18px;">
+                            <div>
+                                <p style="font-size:13px; font-weight:700; color:#1f2026;">Punktte tólew</p>
+                                <p style="font-size:11px; color:#8b8e99;">Topshirish punktine kelgennen soń tólew</p>
+                            </div>
+                        </label>
+                    </div>
+
+                    <!-- DYNAMIC CARD SELECTION -->
+                    <div id="card-selection-area" style="margin-top:12px; display:none; padding:16px; background:#f8f9fb; border-radius:10px; border:1px dashed #7000ff;">
+                        <p style="font-size:11px; font-weight:700; color:#7000ff; margin-bottom:8px; text-transform:uppercase;">Kartańızdı tańlań</p>
+                        <div id="order-cards-list" style="display:flex; flex-direction:column; gap:8px;">
+                            <!-- Cards will be injected here -->
+                        </div>
+                        <button type="button" onclick="openCardModal()" style="margin-top:10px; background:none; border:none; color:#7000ff; font-size:12px; font-weight:700; cursor:pointer;">+ Jańa karta qosıw</button>
+                    </div>
+                </div>
+
+                <label style="margin-top:16px;">Izoh (ixtıyarı)</label>
+                <textarea id="order-note" placeholder="Qo'shimcha ma'lumot..." rows="2"></textarea>
+
+                <button type="submit" class="btn-primary" style="margin-top:8px;">✅ Buyurtmani Tasdiqlash</button>
             </form>
         </div>
     </div>
@@ -161,9 +289,10 @@
     <div id="success-modal" class="modal">
         <div class="modal-box" style="text-align:center;padding:48px 32px;">
             <div style="font-size:64px;margin-bottom:16px;">🎉</div>
-            <h2 style="color:#7000ff;margin-bottom:12px;">Buyırtmańız qabıl qılındı!</h2>
-            <p style="color:#4d4e59;font-size:15px;">Tez arada operatorımız siz menen baylanısadı.</p>
-            <button onclick="document.getElementById('success-modal').classList.remove('active');document.getElementById('order-overlay').classList.remove('active');" class="btn-primary" style="margin-top:24px;max-width:200px;">OK</button>
+            <h2 style="color:#7000ff;margin-bottom:12px;">Múbarek bolsın!</h2>
+            <p style="color:#4d4e59;font-size:16px;font-weight:600;">Buyırtmańız nátiyjeli saqlandı!</p>
+            <p style="color:#8b8e99;font-size:13px;margin-top:8px;">Tez arada buyırtmańızdı alıp ketiwińiz múmkin.</p>
+            <button onclick="document.getElementById('success-modal').classList.remove('active');document.getElementById('order-overlay').classList.remove('active');" class="btn-primary" style="margin-top:24px;max-width:200px;">Bosh sahifaga</button>
         </div>
     </div>
     <div id="order-overlay" class="cart-overlay"></div>
@@ -313,7 +442,7 @@
             <div class="footer-column">
                 <h4>Baylanıs</h4>
                 <ul>
-                    <li>+998 90 000 00 00</li>
+                    <li><a href="tel:+998912555309" style="color:inherit; text-decoration:none;">+998 91 255 53 09</a></li>
                     <li>info@sambufer.uz</li>
                     <li>Nókis, Qaraqalpaqstan</li>
                 </ul>
@@ -323,6 +452,100 @@
             <p>&copy; 2026 Sambufer Market. Barsha huqıqlar qorǵalǵan.</p>
         </div>
     </footer>
+
+    <!-- AUTH MODAL (Registration) -->
+    <div id="auth-modal" class="modal">
+        <div class="modal-box" style="width: 380px;">
+            <div class="modal-header">
+                <h3>Dizimnen ótiw</h3>
+                <button class="close-btn" onclick="closeAuthModal()">&times;</button>
+            </div>
+            <form id="auth-form" class="order-form" onsubmit="handleAuth(event)">
+                <p style="font-size: 13px; color: #6b6b8a; margin-bottom: 12px; text-align: center;">Buyırtma beriw ushın telefon nomerińizdi kiritiń</p>
+                <div style="display:flex; flex-direction:column; gap:8px;">
+                    <label style="font-size:12px; font-weight:600;">Atıńız</label>
+                    <input type="text" id="user-name" placeholder="Masalan: Aziz" required>
+                    <label style="font-size:12px; font-weight:600;">Telefon nomerińiz</label>
+                    <input type="tel" id="user-phone" placeholder="+998 __ ___ __ __" required>
+                </div>
+                <div style="margin-top: 16px;">
+                   <button type="submit" class="btn-primary">Kiriw</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div id="auth-overlay" class="cart-overlay" onclick="closeAuthModal()"></div>
+
+    <!-- PROFILE MODAL -->
+    <div id="profile-modal" class="modal">
+        <div class="modal-box" style="width: 420px; max-height: 85vh; overflow-y: auto;">
+            <div class="modal-header">
+                <h3 style="font-weight: 800;">Profilim</h3>
+                <button class="close-btn" onclick="closeProfileModal()">&times;</button>
+            </div>
+            <div id="profile-content" style="padding: 20px;">
+                <!-- Profile details here -->
+            </div>
+            <div style="padding: 16px 20px; border-top: 1px solid #f2f4f7;">
+                <button class="btn-primary" onclick="userLogout()" style="background:#ff4651; width: 100%; font-weight:700;">Tizimdan chiqish</button>
+            </div>
+        </div>
+    </div>
+    <div id="profile-overlay" class="cart-overlay" onclick="closeProfileModal()"></div>
+
+    <!-- ADD CARD MODAL -->
+    <div id="card-modal" class="modal">
+        <div class="modal-box" style="width: 380px;">
+            <div class="modal-header">
+                <h3>Karta qosıw</h3>
+                <button class="close-btn" onclick="closeCardModal()">&times;</button>
+            </div>
+            <form id="card-form" class="order-form" onsubmit="handleAddCard(event)" style="padding: 20px;">
+                <div style="display:flex; flex-direction:column; gap:16px;">
+                    <!-- TYPE SELECTOR -->
+                    <div style="display:flex; gap:8px; justify-content:center; margin-bottom:8px;">
+                        <label class="card-type-label">
+                            <input type="radio" name="card-type" value="Uzcard" checked onchange="updateCardSkin('Uzcard')">
+                            <span class="card-type-btn">Uzcard</span>
+                        </label>
+                        <label class="card-type-label">
+                            <input type="radio" name="card-type" value="Humo" onchange="updateCardSkin('Humo')">
+                            <span class="card-type-btn">Humo</span>
+                        </label>
+                        <label class="card-type-label">
+                            <input type="radio" name="card-type" value="Visa" onchange="updateCardSkin('Visa')">
+                            <span class="card-type-btn">Visa</span>
+                        </label>
+                        <label class="card-type-label">
+                            <input type="radio" name="card-type" value="Mastercard" onchange="updateCardSkin('Mastercard')">
+                            <span class="card-type-btn">Mastercard</span>
+                        </label>
+                        <label class="card-type-label">
+                            <input type="radio" name="card-type" value="Uzum" onchange="updateCardSkin('Uzum')">
+                            <span class="card-type-btn">Uzum</span>
+                        </label>
+                    </div>
+
+                    <div id="card-preview-box" style="background: linear-gradient(135deg, #7000ff, #a855f7); padding: 24px; border-radius: 16px; color: #fff; box-shadow: 0 12px 32px rgba(112, 0, 255, 0.3); transition: all 0.4s ease; position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: -20px; right: -20px; width: 120px; height: 120px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
+                        <p style="font-size: 10px; font-weight: 700; opacity: 0.8; margin-bottom: 6px; letter-spacing: 1px;">KARTA NOMERI</p>
+                        <input type="text" id="card-num" placeholder="0000 0000 0000 0000" maxlength="19" required
+                            style="background: transparent; border: none; color: #fff; font-size: 20px; font-weight: 800; width: 100%; outline: none; letter-spacing: 2px;">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 24px;">
+                            <div>
+                                <p style="font-size: 8px; font-weight: 700; opacity: 0.8; margin-bottom: 4px;">MUDDETI</p>
+                                <input type="text" id="card-exp" placeholder="MM/YY" maxlength="5" required
+                                    style="background: transparent; border: none; color: #fff; font-size: 16px; font-weight: 800; width: 70px; outline: none;">
+                            </div>
+                            <div id="card-logo-preview" style="font-weight: 900; font-style: italic; font-size: 18px; letter-spacing: -1px;">UZCARD</div>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary" style="margin-top: 24px; font-weight: 700; height: 50px;">💳 Kartanı saqlaw</button>
+            </form>
+        </div>
+    </div>
+    <div id="card-overlay" class="cart-overlay" onclick="closeCardModal()"></div>
 
     <script src="app.js"></script>
 </body>
